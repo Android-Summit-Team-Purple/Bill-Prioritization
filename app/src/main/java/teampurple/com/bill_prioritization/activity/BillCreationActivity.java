@@ -1,4 +1,4 @@
-package teampurple.com.bill_prioritization;
+package teampurple.com.bill_prioritization.activity;
 
 import android.util.Log;
 
@@ -18,6 +18,8 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import teampurple.com.bill_prioritization.BuildConfig;
 
 /**
  * Created by Anthony-Parkour on 8/27/16.
