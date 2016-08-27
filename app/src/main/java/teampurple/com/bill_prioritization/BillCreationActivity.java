@@ -60,7 +60,6 @@ public class BillCreationActivity {
 
     //create new merchant if they want
     public void createMerchant(){
-        final String API_KEY = BuildConfig.NESSIE_API_KEY;
 
         new Thread() {
             public void run() {
@@ -119,8 +118,58 @@ public class BillCreationActivity {
             }
         }.start();
     }
-    //create new bill
 
+    //create new bill
+    //get system id for user
+    public void createNewBill(){
+
+        new Thread() {
+            public void run() {
+                HttpURLConnection connection = null;
+                try {
+                    URL myURL = new URL("http://api.reimaginebanking.com/accounts/id/bills/?key=" + API_KEY);
+                    connection = (HttpURLConnection) myURL.openConnection();
+                    connection.setRequestProperty("Content-Type","application/json");
+                    connection.setRequestProperty("Accept", "application/json");
+                    connection.setRequestMethod("POST");
+
+                    JSONObject json = new JSONObject();
+                    json.put("status", "Test");
+                    json.put("payee", "Electric");
+                    json.put("payment_date", "date");
+                    json.put("recurring_date", 1);
+                    json.put("payment_amount", 0.01);
+
+
+                    OutputStream os = connection.getOutputStream();
+                    BufferedWriter writer = new BufferedWriter(
+                            new OutputStreamWriter(os, "UTF-8"));
+
+                    writer.write(json.toString());
+                    writer.flush();
+                    writer.close();
+                    os.close();
+
+                    InputStream iStream = new BufferedInputStream(connection.getInputStream());
+
+                    String response = readStream2(iStream);
+
+                    Log.e(LOG_TAG, "Merchant Creation: " + response);
+
+                } catch (MalformedURLException ex) {
+                    Log.e(LOG_TAG, "Invalid URL", ex);
+                } catch (IOException ex) {
+                    Log.e(LOG_TAG, "IO/Connection Error", ex);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (connection == null) {
+                        connection.disconnect();
+                    }
+                }
+            }
+        }.start();
+    }
     //read input stream into json
     private JSONObject readStream(InputStream is) {
         try {
