@@ -1,27 +1,46 @@
 {
   "project_info": {
+<<<<<<< HEAD
     "project_number": "842685670889",
     "firebase_url": "https://billprioritization.firebaseio.com",
     "project_id": "billprioritization",
     "storage_bucket": "billprioritization.appspot.com"
+=======
+    "project_number": "299296302885",
+    "firebase_url": "https://bill-prioritization-64b87.firebaseio.com",
+    "project_id": "bill-prioritization-64b87",
+    "storage_bucket": "bill-prioritization-64b87.appspot.com"
+>>>>>>> 18580e3de1c6d19e69776a3150243b388370fb42
   },
   "client": [
     {
       "client_info": {
+<<<<<<< HEAD
         "mobilesdk_app_id": "1:842685670889:android:8362507921d1643b",
+=======
+        "mobilesdk_app_id": "1:299296302885:android:8362507921d1643b",
+>>>>>>> 18580e3de1c6d19e69776a3150243b388370fb42
         "android_client_info": {
           "package_name": "teampurple.com.bill_prioritization"
         }
       },
       "oauth_client": [
         {
+<<<<<<< HEAD
           "client_id": "842685670889-h4j3apo8jobcvcjuchetn2nq9aaue2lt.apps.googleusercontent.com",
+=======
+          "client_id": "299296302885-iqa5f5u6gnmr3rbmj53p8hl5jfgdfbnt.apps.googleusercontent.com",
+>>>>>>> 18580e3de1c6d19e69776a3150243b388370fb42
           "client_type": 3
         }
       ],
       "api_key": [
         {
+<<<<<<< HEAD
           "current_key": "AIzaSyCs0tUyl0cGXEeBX2wEyyDdC7j8g24P3yk"
+=======
+          "current_key": "AIzaSyBzpl5HDEtgyytCPQq-55jztIpNZk1BUPY"
+>>>>>>> 18580e3de1c6d19e69776a3150243b388370fb42
         }
       ],
       "services": {
