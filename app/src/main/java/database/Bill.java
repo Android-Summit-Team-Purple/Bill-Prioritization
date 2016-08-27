@@ -27,6 +27,7 @@ public class Bill {
         this.paymentDate = paymentDate;
         this.recurringDate = recurringDate;
         this.upcomingPaymentDate = upcomingPaymentDate;
+//        this.isPriority = calculatePriority();
     }
 
     public Bill(long accountId, String status, String payee, String nickname, long creationDate, String paymentDate, long recurringDate, long upcomingPaymentDate) {
