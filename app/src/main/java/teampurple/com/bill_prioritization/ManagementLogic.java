@@ -114,6 +114,7 @@ public class ManagementLogic extends AppCompatActivity{
     }
 
     //determine if user can afford bills
+<<<<<<< HEAD
 //    public boolean affordBills(){
 //        double billBalance = 0;
 //
@@ -131,12 +132,28 @@ public class ManagementLogic extends AppCompatActivity{
 //        }
 //        return false;
 //    }
+=======
+    public boolean affordBills(){
+        double billBalance = 0;
 
-    //look at their manual priority
-    //determine rest of priority based on categories
-    //create a priority list in conjunction with standard list
+        for(int i = 0; i < BillArray.size(); i++){
+            Bill thisBill = BillArray.get(i);
+            //billBalance = billBalance + thisBill.paymentAmt;
+
+            if(i == BillArray.size() - 1){
+                if(billBalance > currentBalance){
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public void fillPriorityList() throws ParseException {
         double priorityBalance = 0;
+
         ArrayList<Bill> tempPriorities = new ArrayList<Bill>();
         ArrayList<Bill> tempUrgent = new ArrayList<Bill>();
         ArrayList<Bill> whatsLeft = BillArray;
@@ -208,7 +225,6 @@ public class ManagementLogic extends AppCompatActivity{
                 Urgent = tempUrgent;
                 Priorities = tempPriorities;
 //                            BillArray = whatsLeft;
-
 
                 Log.e(LOG_TAG, "priorites: " + tempPriorities);
                 Log.e(LOG_TAG, "urgen: " + tempUrgent);
