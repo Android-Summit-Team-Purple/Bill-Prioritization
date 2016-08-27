@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //test call for merchants
-        BillCreationActivity billCreationActivity = new BillCreationActivity();
-        billCreationActivity.createMerchant();
+//        BillCreationActivity billCreationActivity = new BillCreationActivity();
+//        billCreationActivity.createMerchant();
     }
 }
