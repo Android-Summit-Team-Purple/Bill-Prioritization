@@ -10,7 +10,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ManagementLogic managementLogic = new ManagementLogic();
-        managementLogic.getBalance();
+//        ManagementLogic managementLogic = new ManagementLogic();
+//        managementLogic.getBalance();
     }
 }
