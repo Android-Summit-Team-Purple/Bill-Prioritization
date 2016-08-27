@@ -12,6 +12,6 @@ public class MainActivity extends AppCompatActivity {
 
         //test call for merchants
         BillCreationActivity billCreationActivity = new BillCreationActivity();
-        billCreationActivity.getExistingMerchants();
+        billCreationActivity.createMerchant();
     }
 }
