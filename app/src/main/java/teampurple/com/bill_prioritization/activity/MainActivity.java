@@ -1,7 +1,9 @@
-package teampurple.com.bill_prioritization;
+package teampurple.com.bill_prioritization.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import teampurple.com.bill_prioritization.R;
 
 public class MainActivity extends Activity {
 

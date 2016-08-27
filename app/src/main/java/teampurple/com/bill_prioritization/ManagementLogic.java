@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import database.Bill;
+
 /**
  * Created by Anthony-Parkour on 8/27/16.
  */
@@ -109,7 +111,7 @@ public class ManagementLogic {
 
         for(int i = 0; i < BillArray.size(); i++){
             Bill thisBill = BillArray.get(i);
-            billBalance = billBalance + thisBill.paymentAmt;
+            //billBalance = billBalance + thisBill.paymentAmt;
 
             if(i == BillArray.size() - 1){
                 if(billBalance > currentBalance){
@@ -126,7 +128,7 @@ public class ManagementLogic {
     //determine rest of priority based on categories
     //create a priority list in conjunction with standard list
     public void fillPriorityList(){
-        double priorityBalance = 0;
+      /*  double priorityBalance = 0;
         ArrayList<Bill> tempPriorities = new ArrayList<Bill>();
         ArrayList<Bill> tempUrgent = new ArrayList<Bill>();
         ArrayList<Bill> whatsLeft = BillArray;
@@ -166,7 +168,7 @@ public class ManagementLogic {
                 BillArray = whatsLeft;
             }
 
-        }
+        }*/
     }
 
     //read inputstream into string
