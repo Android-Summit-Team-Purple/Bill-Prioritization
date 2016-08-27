@@ -1,5 +1,6 @@
 package teampurple.com.bill_prioritization;
 
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -12,6 +13,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,14 +24,15 @@ import database.Bill;
 /**
  * Created by Anthony-Parkour on 8/27/16.
  */
-public class ManagementLogic {
+public class ManagementLogic extends AppCompatActivity{
     private final String LOG_TAG = "Bills";
     final String API_KEY = BuildConfig.NESSIE_API_KEY;
 
     double currentBalance = 0;
-    ArrayList<Bill> BillArray = new ArrayList<Bill>();
-    ArrayList<Bill> Priorities = new ArrayList<Bill>();
-    ArrayList<Bill> Urgent = new ArrayList<Bill>();
+    public ArrayList<Bill> BillArray = new ArrayList<Bill>();
+    public ArrayList<Bill> Priorities = new ArrayList<Bill>();
+    public ArrayList<Bill> Urgent = new ArrayList<Bill>();
+
 
     //check user's balance
     public void getBalance(){
@@ -95,11 +98,16 @@ public class ManagementLogic {
                         connection.disconnect();
                     }
 
-                    if(affordBills()){
-                        //user is ok and can afford bills
-                    }else{
-                        //user can not afford their bills
+                    try {
+                        fillPriorityList();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
+//                    if(affordBills()){
+//                        //user is ok and can afford bills
+//                    }else{
+//                        //user can not afford their bills
+//                    }
                 }
             }
         }.start();
@@ -124,11 +132,9 @@ public class ManagementLogic {
         return false;
     }
 
-    //look at their manual priority
-    //determine rest of priority based on categories
-    //create a priority list in conjunction with standard list
-    public void fillPriorityList(){
-      /*  double priorityBalance = 0;
+    public void fillPriorityList() throws ParseException {
+        double priorityBalance = 0;
+
         ArrayList<Bill> tempPriorities = new ArrayList<Bill>();
         ArrayList<Bill> tempUrgent = new ArrayList<Bill>();
         ArrayList<Bill> whatsLeft = BillArray;
@@ -136,15 +142,29 @@ public class ManagementLogic {
         for(int i = 0; i < BillArray.size(); i++){
             Bill thisBill = BillArray.get(i);
 
+            Log.e(LOG_TAG, "i = " + i);
+            Log.e(LOG_TAG, "BillArray.size = " + BillArray.size());
+
+
             //if manually set to priority add to list
-            if(thisBill.priority){
+            if(thisBill.isPriority){
+                Log.e(LOG_TAG, "is priority");
+
                 tempPriorities.add(thisBill);
-                whatsLeft.remove(thisBill);
+//                whatsLeft.remove(thisBill);
 //                priorityBalance = priorityBalance + thisBill.paymentAmt;
+
+                if(i == BillArray.size() -1){
+//                    Urgent = tempUrgent;
+//                    Priorities = tempPriorities;
+//                    BillArray = whatsLeft;
+
+                    Log.e(LOG_TAG, "Urgent: " + tempPriorities);
+                }
             }else{
                 //convert and compare date
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                Date dueDate = sdf.parse(thisBill.dueDate);
+                Date dueDate = sdf.parse(thisBill.paymentDate);
 
                 //50 days past due
                 Calendar calendar = Calendar.getInstance();
@@ -152,12 +172,32 @@ public class ManagementLogic {
                 calendar.add(Calendar.DATE, -50);
 
                 if(dueDate.before(calendar.getTime())){
+                    Log.e(LOG_TAG, "urgent");
                     tempPriorities.add(thisBill);
-                    whatsLeft.remove(thisBill);
+//                    whatsLeft.remove(thisBill);
+
+                    if(i == BillArray.size() -1){
+//                        Urgent = tempUrgent;
+//                        Priorities = tempPriorities;
+//                        BillArray = whatsLeft;
+
+                        Log.e(LOG_TAG, "Urgent: " + tempPriorities);
+                    }
                 }else{
                     if (dueDate.before(new Date())){
+                        Log.e(LOG_TAG, "past due");
                         tempUrgent.add(thisBill);
-                        whatsLeft.remove(thisBill);
+//                        whatsLeft.remove(thisBill);
+
+                        if(i == BillArray.size() -1){
+//                            Urgent = tempUrgent;
+//                            Priorities = tempPriorities;
+//                            BillArray = whatsLeft;
+
+                            Log.e(LOG_TAG, "Urgent: " + tempPriorities);
+                        }
+                    }else{
+
                     }
                 }
             }
@@ -165,10 +205,16 @@ public class ManagementLogic {
             if(i == BillArray.size() -1){
                 Urgent = tempUrgent;
                 Priorities = tempPriorities;
-                BillArray = whatsLeft;
-            }
+//                            BillArray = whatsLeft;
 
-        }*/
+                Log.e(LOG_TAG, "priorites: " + tempPriorities);
+                Log.e(LOG_TAG, "urgen: " + tempUrgent);
+
+//                Intent intent = new Intent();
+//                intent.setAction("teampurple.com.bill_prioritization.DoneListener");
+//                sendBroadcast(intent);
+            }
+        }
     }
 
     //read inputstream into string
