@@ -12,12 +12,12 @@ public class Bill {
     public String payee;
     public String nickname;
     public long creationDate;
-    public long paymentDate;
+    public String paymentDate;
     public long recurringDate;
     public long upcomingPaymentDate;
     public boolean isPriority;
 
-    public Bill(long id, long accountId, String status, String payee, String nickname, long creationDate, long paymentDate, long recurringDate, long upcomingPaymentDate) {
+    public Bill(long id, long accountId, String status, String payee, String nickname, long creationDate, String paymentDate, long recurringDate, long upcomingPaymentDate) {
         this.id = id;
         this.accountId = accountId;
         this.status = status;
@@ -29,7 +29,7 @@ public class Bill {
         this.upcomingPaymentDate = upcomingPaymentDate;
     }
 
-    public Bill(long accountId, String status, String payee, String nickname, long creationDate, long paymentDate, long recurringDate, long upcomingPaymentDate) {
+    public Bill(long accountId, String status, String payee, String nickname, long creationDate, String paymentDate, long recurringDate, long upcomingPaymentDate) {
         this.accountId = accountId;
         this.status = status;
         this.payee = payee;

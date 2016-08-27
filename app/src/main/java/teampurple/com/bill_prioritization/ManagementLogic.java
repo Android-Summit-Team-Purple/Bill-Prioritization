@@ -12,10 +12,13 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import database.Bill;
 
 /**
  * Created by Anthony-Parkour on 8/27/16.
@@ -93,39 +96,44 @@ public class ManagementLogic {
                         connection.disconnect();
                     }
 
-                    if(affordBills()){
-                        //user is ok and can afford bills
-                    }else{
-                        //user can not afford their bills
+                    try {
+                        fillPriorityList();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
+//                    if(affordBills()){
+//                        //user is ok and can afford bills
+//                    }else{
+//                        //user can not afford their bills
+//                    }
                 }
             }
         }.start();
     }
 
     //determine if user can afford bills
-    public boolean affordBills(){
-        double billBalance = 0;
-
-        for(int i = 0; i < BillArray.size(); i++){
-            Bill thisBill = BillArray.get(i);
-            billBalance = billBalance + thisBill.paymentAmt;
-
-            if(i == BillArray.size() - 1){
-                if(billBalance > currentBalance){
-                    return false;
-                }else{
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+//    public boolean affordBills(){
+//        double billBalance = 0;
+//
+//        for(int i = 0; i < BillArray.size(); i++){
+//            Bill thisBill = BillArray.get(i);
+////            billBalance = billBalance + thisBill.paymentDate;
+//
+//            if(i == BillArray.size() - 1){
+//                if(billBalance > currentBalance){
+//                    return false;
+//                }else{
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
 
     //look at their manual priority
     //determine rest of priority based on categories
     //create a priority list in conjunction with standard list
-    public void fillPriorityList(){
+    public void fillPriorityList() throws ParseException {
         double priorityBalance = 0;
         ArrayList<Bill> tempPriorities = new ArrayList<Bill>();
         ArrayList<Bill> tempUrgent = new ArrayList<Bill>();
@@ -135,14 +143,14 @@ public class ManagementLogic {
             Bill thisBill = BillArray.get(i);
 
             //if manually set to priority add to list
-            if(thisBill.priority){
+            if(thisBill.isPriority){
                 tempPriorities.add(thisBill);
                 whatsLeft.remove(thisBill);
 //                priorityBalance = priorityBalance + thisBill.paymentAmt;
             }else{
                 //convert and compare date
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                Date dueDate = sdf.parse(thisBill.dueDate);
+                Date dueDate = sdf.parse(thisBill.paymentDate);
 
                 //50 days past due
                 Calendar calendar = Calendar.getInstance();
