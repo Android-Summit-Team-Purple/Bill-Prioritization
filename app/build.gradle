@@ -10,6 +10,9 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+        // Load any API keys from gradle.properties
+        buildConfigField("String", "NESSIE_API_KEY", NESSIE_API_KEY)
     }
     buildTypes {
         release {
