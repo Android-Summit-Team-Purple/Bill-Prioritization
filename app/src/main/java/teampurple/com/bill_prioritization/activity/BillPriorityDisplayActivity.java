@@ -18,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +55,7 @@ public class BillPriorityDisplayActivity extends AppCompatActivity implements Na
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(BillPriorityDisplayActivity.this, "ADD NEW BILL", Toast.LENGTH_LONG).show();
+//                Toast.makeText(BillPriorityDisplayActivity.this, "ADD NEW BILL", Toast.LENGTH_LONG).show();
             }
         });
 

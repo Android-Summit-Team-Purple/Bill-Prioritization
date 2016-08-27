@@ -18,7 +18,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 import database.Bill;
-
+import teampurple.com.bill_prioritization.ManagementLogic;
 import teampurple.com.bill_prioritization.R;
 
 public class MainActivity extends Activity {

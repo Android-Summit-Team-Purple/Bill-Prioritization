@@ -29,7 +29,7 @@ public class ManagementLogic extends AppCompatActivity{
     final String API_KEY = BuildConfig.NESSIE_API_KEY;
 
     double currentBalance = 0;
-    ArrayList<Bill> BillArray = new ArrayList<Bill>();
+    public ArrayList<Bill> BillArray = new ArrayList<Bill>();
     public ArrayList<Bill> Priorities = new ArrayList<Bill>();
     public ArrayList<Bill> Urgent = new ArrayList<Bill>();
 
@@ -114,25 +114,6 @@ public class ManagementLogic extends AppCompatActivity{
     }
 
     //determine if user can afford bills
-<<<<<<< HEAD
-//    public boolean affordBills(){
-//        double billBalance = 0;
-//
-//        for(int i = 0; i < BillArray.size(); i++){
-//            Bill thisBill = BillArray.get(i);
-////            billBalance = billBalance + thisBill.paymentDate;
-//
-//            if(i == BillArray.size() - 1){
-//                if(billBalance > currentBalance){
-//                    return false;
-//                }else{
-//                    return true;
-//                }
-//            }
-//        }
-//        return false;
-//    }
-=======
     public boolean affordBills(){
         double billBalance = 0;
 
