@@ -12,7 +12,10 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Anthony-Parkour on 8/27/16.
@@ -21,8 +24,10 @@ public class ManagementLogic {
     private final String LOG_TAG = "Bills";
     final String API_KEY = BuildConfig.NESSIE_API_KEY;
 
-    double currentBalance;
+    double currentBalance = 0;
     ArrayList<Bill> BillArray = new ArrayList<Bill>();
+    ArrayList<Bill> Priorities = new ArrayList<Bill>();
+    ArrayList<Bill> Urgent = new ArrayList<Bill>();
 
     //check user's balance
     public void getBalance(){
@@ -52,6 +57,8 @@ public class ManagementLogic {
                     if (connection == null) {
                         connection.disconnect();
                     }
+
+                    getBills();
                 }
             }
         }.start();
@@ -85,6 +92,12 @@ public class ManagementLogic {
                     if (connection == null) {
                         connection.disconnect();
                     }
+
+                    if(affordBills()){
+                        //user is ok and can afford bills
+                    }else{
+                        //user can not afford their bills
+                    }
                 }
             }
         }.start();
@@ -95,6 +108,7 @@ public class ManagementLogic {
         double billBalance = 0;
 
         for(int i = 0; i < BillArray.size(); i++){
+            Bill thisBill = BillArray.get(i);
             billBalance = billBalance + thisBill.paymentAmt;
 
             if(i == BillArray.size() - 1){
@@ -105,12 +119,55 @@ public class ManagementLogic {
                 }
             }
         }
-
         return false;
     }
 
     //look at their manual priority
     //determine rest of priority based on categories
+    //create a priority list in conjunction with standard list
+    public void fillPriorityList(){
+        double priorityBalance = 0;
+        ArrayList<Bill> tempPriorities = new ArrayList<Bill>();
+        ArrayList<Bill> tempUrgent = new ArrayList<Bill>();
+        ArrayList<Bill> whatsLeft = BillArray;
+
+        for(int i = 0; i < BillArray.size(); i++){
+            Bill thisBill = BillArray.get(i);
+
+            //if manually set to priority add to list
+            if(thisBill.priority){
+                tempPriorities.add(thisBill);
+                whatsLeft.remove(thisBill);
+//                priorityBalance = priorityBalance + thisBill.paymentAmt;
+            }else{
+                //convert and compare date
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                Date dueDate = sdf.parse(thisBill.dueDate);
+
+                //50 days past due
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(new Date());
+                calendar.add(Calendar.DATE, -50);
+
+                if(dueDate.before(calendar.getTime())){
+                    tempPriorities.add(thisBill);
+                    whatsLeft.remove(thisBill);
+                }else{
+                    if (dueDate.before(new Date())){
+                        tempUrgent.add(thisBill);
+                        whatsLeft.remove(thisBill);
+                    }
+                }
+            }
+
+            if(i == BillArray.size() -1){
+                Urgent = tempUrgent;
+                Priorities = tempPriorities;
+                BillArray = whatsLeft;
+            }
+
+        }
+    }
 
     //read inputstream into string
     private String readStream2(InputStream is) {

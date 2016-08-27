@@ -127,6 +127,7 @@ public class BillCreationActivity {
             public void run() {
                 HttpURLConnection connection = null;
                 try {
+                    //need acct ID
                     URL myURL = new URL("http://api.reimaginebanking.com/accounts/id/bills/?key=" + API_KEY);
                     connection = (HttpURLConnection) myURL.openConnection();
                     connection.setRequestProperty("Content-Type","application/json");
