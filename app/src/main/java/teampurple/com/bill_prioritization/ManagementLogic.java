@@ -26,6 +26,8 @@ public class ManagementLogic {
             public void run() {
                 HttpURLConnection connection = null;
                 try {
+
+                    //need to add account id
                     URL myURL = new URL("http://api.reimaginebanking.com/accounts/"+ "id" +"?key=" + API_KEY);
                     connection = (HttpURLConnection) myURL.openConnection();
                     connection.setRequestProperty("Content-Type", "application/json");
@@ -52,6 +54,37 @@ public class ManagementLogic {
     }
 
     //get all their bills
+    public void getBills(){
+        new Thread() {
+            public void run() {
+                HttpURLConnection connection = null;
+                try {
+
+                    //need to add account id
+                    URL myURL = new URL("http://api.reimaginebanking.com/accounts/"+ "id" +"/bills?key=" + API_KEY);
+                    connection = (HttpURLConnection) myURL.openConnection();
+                    connection.setRequestProperty("Content-Type", "application/json");
+                    connection.setRequestMethod("GET");
+
+                    InputStream iStream = new BufferedInputStream(connection.getInputStream());
+                    String response = readStream2(iStream);
+                    JSONArray billArray = new JSONArray(response);
+                    Log.e(LOG_TAG, "Bills: " + billArray);
+
+                } catch (MalformedURLException ex) {
+                    Log.e(LOG_TAG, "Invalid URL", ex);
+                } catch (IOException ex) {
+                    Log.e(LOG_TAG, "IO/Connection Error", ex);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (connection == null) {
+                        connection.disconnect();
+                    }
+                }
+            }
+        }.start();
+    }
     //look at their manual priority
     //determine rest of priority based on categories
 
