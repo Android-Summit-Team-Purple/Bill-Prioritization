@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * Created by Anthony-Parkour on 8/27/16.
@@ -19,6 +20,9 @@ import java.net.URL;
 public class ManagementLogic {
     private final String LOG_TAG = "Bills";
     final String API_KEY = BuildConfig.NESSIE_API_KEY;
+
+    double currentBalance;
+    ArrayList<Bill> BillArray = new ArrayList<Bill>();
 
     //check user's balance
     public void getBalance(){
@@ -85,6 +89,26 @@ public class ManagementLogic {
             }
         }.start();
     }
+
+    //determine if user can afford bills
+    public boolean affordBills(){
+        double billBalance = 0;
+
+        for(int i = 0; i < BillArray.size(); i++){
+            billBalance = billBalance + thisBill.paymentAmt;
+
+            if(i == BillArray.size() - 1){
+                if(billBalance > currentBalance){
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     //look at their manual priority
     //determine rest of priority based on categories
 
